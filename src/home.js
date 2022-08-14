@@ -1,19 +1,15 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
-import {Form, Button, Card, Container} from 'react-bootstrap';
+import {Form, Button, Card, Container,  Navbar} from 'react-bootstrap';
 import {useEffect, useRef, useState} from "react";
-import {useNavigate} from 'react-router-dom';
-import qs from 'qs';
+import {Link} from 'react-router-dom';
 import Board from './board.js';
 const {v1: uuidv1} = require("uuid");
 
 const Home = (props) => {
     //props here
-    const navigate = useNavigate();
     const [user,
         setUser] = React.useState('');
-    const [post,
-        setPost] = React.useState();
     const [title,
         setTitle] = React.useState('');
     const [content,
@@ -43,7 +39,7 @@ const Home = (props) => {
         setTitle('');
         setContent('');
         setImage('');
-        window.location.reload(false); // FIND A WAY TO RELOAD BOARD ONLY?
+        window.location.reload(false); 
         if (image !== null) {
             formData.append('image', image)
         } else {
@@ -67,6 +63,11 @@ const Home = (props) => {
 
     return ( <> 
     <Container id="main-container" style={{backgroundColor: "#2b2b2b"}}>
+    <Navbar bg="dark" sticky="top">
+        <Container>
+          <Link to='/'style={{ textDecoration: 'none' }}>Home</Link>
+        </Container>
+      </Navbar>
         <Container>
             <h1 className=" text-light text-center">Welcome to the discussion board, discuss away</h1>
         </Container>
@@ -90,7 +91,7 @@ const Home = (props) => {
                             value={content}
                             onChange={e => setContent(e.currentTarget.value)}
                             rows={4}
-                            minLength={50}
+                            minLength={10}
                             maxLength={63206}
                             required
                             style={{
@@ -111,7 +112,7 @@ const Home = (props) => {
                     <Button
                         className="bg-secondary border-secondary float-end"
                         type="submit"
-                        onClick={onSubmit}>Submit</Button>
+                    >Submit</Button>
                 </Form>
             </Container>
             <Board/>
@@ -121,5 +122,4 @@ const Home = (props) => {
         
         );
 };
-
 export default Home;
