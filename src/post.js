@@ -89,7 +89,7 @@ const Post = (props) => {
                         <div className="post-author">author: {post.user_id}</div>
                         <div className="post-date">Created {post.date_created}</div>
                         <div className="post-content">{post.content}</div>
-                        <img className="post-image" src={post.image}alt=''></img>
+                        <img className="post-image" src={`localhost:3000/images/${post.imageName}`}alt=''></img>
                     </Card>
                 ))}
               <Container className="d-grid">
@@ -98,7 +98,7 @@ const Post = (props) => {
                         <Form.Control
                             type="text"
                             value={comment}
-                            minLength={10}
+                            minLength={2}
                             maxLength={63206}
                             onChange={e => setComment(e.currentTarget.value)}
                             placeholder='Write a comment...'

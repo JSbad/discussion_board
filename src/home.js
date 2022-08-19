@@ -7,7 +7,6 @@ import Board from './board.js';
 const {v1: uuidv1} = require("uuid");
 
 const Home = (props) => {
-    //props here
     const [user,
         setUser] = React.useState('');
     const [title,
@@ -15,8 +14,13 @@ const Home = (props) => {
     const [content,
         setContent] = React.useState('');
     const [image,
-        setImage] = React.useState('');
-    
+        setImage] = React.useState(undefined);
+    const [imageName,
+        setImageName] = React.useState('');
+    const selectImage = (event) => {
+        setImage(event.target.files[0])
+        setImageName(event.target.files[0].name)
+    }
 
     useEffect(() => {
         const localUser = localStorage.getItem("user");
@@ -36,23 +40,24 @@ const Home = (props) => {
         let formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
-        setTitle('');
-        setContent('');
-        setImage('');
-        window.location.reload(false); 
+        formData.append('imageName', 'images'+imageName)
         if (image !== null) {
             formData.append('image', image)
         } else {
             formData.append('image', '')
         }
-
+        setTitle('');
+        setContent('');
+        setImage('');
+        // window.location.reload(false); 
+        
         const requestOptions = {
             method: 'post',
             body: formData
         }
         try {
             let response = await fetch(`http://localhost:3000/posts?userId=${user}`, requestOptions)
-            if (response.status === 200) {
+            if (response.status === 201) {
                 console.log(response.data.payload)
             }
         } catch (err) {
@@ -102,8 +107,8 @@ const Home = (props) => {
                         <Form.Label className="text-light">Upload picture</Form.Label>
                         <Form.Control
                             type="file"
-                            value={image}
-                            onChange={e => setImage(e.currentTarget.value)}
+                            name="image"
+                            onChange={selectImage}
                             accept="image/png, image/jpg, image/jpeg*"
                             style={{
                             maxWidth: "15rem"
@@ -113,11 +118,13 @@ const Home = (props) => {
                         className="bg-secondary border-secondary float-end"
                         type="submit"
                     >Submit</Button>
+                    <Button onClick={e=>console.log(image)}>test</Button>
                 </Form>
             </Container>
             <Board/>
         </Container>
-    </Container> </>
+    </Container> 
+    </>
 
         
         );
