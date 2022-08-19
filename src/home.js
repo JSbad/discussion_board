@@ -118,7 +118,6 @@ const Home = (props) => {
                         className="bg-secondary border-secondary float-end"
                         type="submit"
                     >Submit</Button>
-                    <Button onClick={e=>console.log(image)}>test</Button>
                 </Form>
             </Container>
             <Board/>
