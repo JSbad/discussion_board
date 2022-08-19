@@ -33,7 +33,7 @@ const Home = (props) => {
             setUser(newUser);
         }
 
-    }, [user]);
+    }, []);
 
     const onSubmit = async e => {
         e.preventDefault();
